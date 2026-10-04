@@ -4,21 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- GitHub Pages Trailing-Slash Enforcer & Root Redirect -->
+    <!-- GitHub Pages Trailing-Slash Enforcer -->
     <script>
       (function() {
         var loc = window.location;
         if (loc.hostname.endsWith('github.io')) {
           var p = loc.pathname;
-          // Enforce trailing slash on directory path so relative ./assets resolve correctly
           if (p.indexOf('.') === -1 && !p.endsWith('/')) {
             loc.replace(p + '/' + loc.search + loc.hash);
-            return;
-          }
-          // If GitHub Pages is pointed to repository root / instead of /docs, redirect to /docs/
-          if (!p.includes('/docs/')) {
-            var target = p.endsWith('/') ? p + 'docs/' : p + '/docs/';
-            loc.replace(target + loc.search + loc.hash);
           }
         }
       })();
@@ -63,9 +56,10 @@
       ]
     }
     </script>
+    <script type="module" crossorigin src="./assets/index-DYTCKSWj.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-D6D35Enl.css">
   </head>
   <body class="bg-white text-slate-800 antialiased selection:bg-indigo-600 selection:text-white">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

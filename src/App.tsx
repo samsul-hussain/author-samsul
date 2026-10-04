@@ -26,6 +26,15 @@ export default function App() {
     }
   }, []);
 
+  const handleUpdatePhoto = (newPhoto: string) => {
+    setCurrentPhoto(newPhoto);
+    try {
+      localStorage.setItem('samsul_profile_photo', newPhoto);
+    } catch (e) {
+      console.warn('LocalStorage error:', e);
+    }
+  };
+
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -44,6 +53,7 @@ export default function App() {
           onExploreBooks={() => scrollToSection('books')}
           onOpenConsultation={() => setGlobalConsultationOpen(true)}
           photoUrl={currentPhoto}
+          onUpdatePhoto={handleUpdatePhoto}
         />
         <About />
         <BooksCatalog />

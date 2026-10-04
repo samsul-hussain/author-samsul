@@ -7,7 +7,7 @@ echo "=================================================="
 
 # Default GitHub username and repo
 GITHUB_USER="samsul-hussain"
-DEFAULT_REPO="author-portfolio"
+DEFAULT_REPO="author-samsul"
 
 # Ask for repository name if not provided
 if [ -z "$1" ]; then

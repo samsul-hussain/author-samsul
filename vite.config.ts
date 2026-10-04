@@ -7,11 +7,12 @@ import { defineConfig, Plugin } from 'vite';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-function cleanHtmlForDist(): Plugin {
+function cleanDistHtml(): Plugin {
   return {
-    name: 'clean-html-for-dist',
+    name: 'clean-dist-html',
     transformIndexHtml(html: string) {
-      return html.replace(/<!-- START_UNCOMPILED_REDIRECT -->[\s\S]*?<!-- END_UNCOMPILED_REDIRECT -->/g, '');
+      // In built dist/index.html and docs/index.html, strip the unbuilt root redirect
+      return html.replace(/\/\/ If GitHub Pages is pointed to repository root \/ instead of \/docs[\s\S]*?}\n\s*}/, '');
     },
   };
 }
@@ -19,7 +20,7 @@ function cleanHtmlForDist(): Plugin {
 export default defineConfig(() => {
   return {
     base: './',
-    plugins: [react(), tailwindcss(), cleanHtmlForDist()],
+    plugins: [cleanDistHtml(), react(), tailwindcss()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

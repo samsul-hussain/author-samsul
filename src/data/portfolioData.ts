@@ -3,7 +3,13 @@ import { Book, ServicePackage, Milestone, Testimonial } from '../types';
 import coverProphecy from '../assets/images/amazon_prophecy.jpg';
 import coverJannah from '../assets/images/amazon_sunnah.jpg';
 import coverDua from '../assets/images/amazon_dua.jpg';
-import heroPortraitCircle from '../assets/images/samsul_holding_book_1790697157930.jpg';
+
+import portraitCircle from '../assets/images/samsul_circle_portrait_1790692830841.jpg';
+import portraitHoldingBook from '../assets/images/samsul_holding_book_1790697157930.jpg';
+import portraitEditorial from '../assets/images/hero_author_editorial_1790691830904.jpg';
+
+// Default official photo for Samsul Hussain across the entire portfolio
+const heroPortraitCircle = portraitCircle;
 
 import coverFishProphet from '../assets/images/cover_fish_prophet_1790699144026.jpg';
 import coverRamadanPlaces from '../assets/images/cover_ramadan_places_1790699165181.jpg';
@@ -15,6 +21,9 @@ import gigChildrenBooks from '../assets/images/fiverr_children_books.jpg';
 
 export {
   heroPortraitCircle,
+  portraitCircle,
+  portraitHoldingBook,
+  portraitEditorial,
   coverProphecy,
   coverJannah,
   coverDua,
