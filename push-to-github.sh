@@ -5,14 +5,16 @@ echo "=================================================="
 echo "  Deploying Portfolio to GitHub (Samsul Hussain)  "
 echo "=================================================="
 
-# Default GitHub username
-GITHUB_USER="SamsulHussain"
+# Default GitHub username and repo
+GITHUB_USER="samsul-hussain"
+DEFAULT_REPO="author-portfolio"
 
 # Ask for repository name if not provided
 if [ -z "$1" ]; then
     echo ""
-    echo "Enter your GitHub repository name (e.g. portfolio or samsulhussain.github.io):"
+    echo "Enter your GitHub repository name [default: $DEFAULT_REPO]:"
     read -r REPO_NAME
+    REPO_NAME="${REPO_NAME:-$DEFAULT_REPO}"
 else
     REPO_NAME="$1"
 fi
