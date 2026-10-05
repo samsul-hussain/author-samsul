@@ -1,24 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="scroll-smooth">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Samsul Hussain · Author & AI Operations Specialist</title>
+    
+    <!-- GitHub Pages Trailing-Slash Enforcer & Browser Extension Fetch Polyfill -->
     <script>
       (function() {
-        var path = window.location.pathname;
-        if (window.location.hostname.endsWith('github.io')) {
-          var segments = path.split('/').filter(Boolean);
-          var repo = segments.length > 0 ? '/' + segments[0] + '/' : '/';
-          window.location.replace(repo + window.location.hash);
-        } else {
-          window.location.replace('./' + window.location.hash);
+        // Polyfill window.fetch with setter so Chrome extensions can patch fetch without throwing TypeError
+        try {
+          var originalFetch = window.fetch;
+          var activeFetch = originalFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return activeFetch;
+            },
+            set: function(fn) {
+              activeFetch = fn;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          // Pass if property cannot be modified
+        }
+
+        // Suppress browser extension uncaught errors from polluting window
+        window.addEventListener('error', function(event) {
+          if (
+            (event.filename && event.filename.includes('chrome-extension://')) ||
+            (event.message && event.message.includes('Cannot set property fetch of #<Window>'))
+          ) {
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            return true;
+          }
+        }, true);
+
+        var loc = window.location;
+        if (loc.hostname.endsWith('github.io')) {
+          var p = loc.pathname;
+          // Enforce trailing slash on directory paths so relative ./assets resolve correctly
+          if (p.indexOf('.') === -1 && !p.endsWith('/')) {
+            loc.replace(p + '/' + loc.search + loc.hash);
+          }
         }
       })();
     </script>
+
+    <title>Samsul Hussain – AI Operations Strategist & Amazon KDP Author</title>
+    <meta name="description" content="Portfolio and book showcase for Samsul Hussain, featuring Amazon KDP publications, AI operations workflows, UN Volunteer media initiatives, and professional publishing services." />
+    <meta property="og:title" content="Samsul Hussain – AI Operations Strategist & Amazon KDP Author" />
+    <meta property="og:description" content="Bridging the gap between raw code, AI operations, and creative storytelling. Amazon KDP Self-Publishing Expert & UN Volunteer." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Samsul Hussain Portfolio" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Samsul Hussain – AI Operations Strategist & Amazon KDP Author" />
+    <meta name="twitter:description" content="Bridging the gap between raw code, AI operations, and creative storytelling. Amazon KDP Self-Publishing Expert & UN Volunteer." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Samsul Hussain",
+      "jobTitle": "AI Operations Strategist & Amazon KDP Author",
+      "description": "AI Operations Strategist, Amazon KDP Published Author, and United Nations Volunteer media contributor.",
+      "alumniOf": [
+        {
+          "@type": "EducationalOrganization",
+          "name": "Harvard University (CS50x)"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "University of Helsinki (Elements of AI)"
+        }
+      ],
+      "knowsAbout": [
+        "AI Operations",
+        "Prompt Engineering",
+        "Amazon KDP Self-Publishing",
+        "Book Interior Formatting",
+        "Cover Design",
+        "United Nations SDG 17"
+      ]
+    }
+    </script>
+    
+    
+    <script type="module" crossorigin src="./assets/index-DtQHoBDT.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-D6D35Enl.css">
   </head>
-  <body style="font-family: system-ui, -apple-system, sans-serif; text-align: center; padding: 60px 20px; color: #334155;">
-    <h2 style="font-size: 20px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Redirecting to Portfolio...</h2>
-    <p style="font-size: 14px; color: #64748b;">If you are not redirected in a few seconds, <a href="./" style="color: #4f46e5; text-decoration: underline;">click here to enter</a>.</p>
+  <body class="bg-white text-slate-800 antialiased selection:bg-indigo-600 selection:text-white">
+    <div id="root"></div>
   </body>
 </html>
