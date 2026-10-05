@@ -25,7 +25,14 @@ export const Footer: React.FC<FooterProps> = ({ photoUrl }) => {
                 <img
                   src={photoUrl}
                   alt={AUTHOR_INFO.name}
+                  loading="lazy"
                   className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-white shadow-md ring-2 ring-amber-500/20"
+                  onError={(e) => {
+                    const img = e.currentTarget;
+                    if (img.src !== 'https://avatars.githubusercontent.com/u/154060887?v=4') {
+                      img.src = 'https://avatars.githubusercontent.com/u/154060887?v=4';
+                    }
+                  }}
                 />
                 <div className="absolute -bottom-1 -right-1 bg-amber-500 rounded-full p-1 border border-white shadow-xs">
                   <AmazonKdpLogo className="w-3 h-3 text-white" />

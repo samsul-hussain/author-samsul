@@ -14,26 +14,26 @@ export default function App() {
   const [globalConsultationOpen, setGlobalConsultationOpen] = useState(false);
   const [currentPhoto, setCurrentPhoto] = useState<string>(heroPortraitCircle);
 
-  // Preserve the applied photo if one was saved
+  // Preserve the applied photo if a real custom photo was uploaded
   useEffect(() => {
     try {
       const savedPhoto = localStorage.getItem('samsul_profile_photo');
-      if (savedPhoto) {
+      // If saved photo is an old AI generated portrait reference, purge it
+      if (
+        savedPhoto &&
+        (savedPhoto.includes('samsul_holding_book') ||
+          savedPhoto.includes('samsul_circle_portrait') ||
+          savedPhoto.includes('hero_author_editorial'))
+      ) {
+        localStorage.removeItem('samsul_profile_photo');
+        setCurrentPhoto(heroPortraitCircle);
+      } else if (savedPhoto) {
         setCurrentPhoto(savedPhoto);
       }
     } catch (e) {
       console.warn('LocalStorage access warning:', e);
     }
   }, []);
-
-  const handleUpdatePhoto = (newPhoto: string) => {
-    setCurrentPhoto(newPhoto);
-    try {
-      localStorage.setItem('samsul_profile_photo', newPhoto);
-    } catch (e) {
-      console.warn('LocalStorage error:', e);
-    }
-  };
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -53,7 +53,6 @@ export default function App() {
           onExploreBooks={() => scrollToSection('books')}
           onOpenConsultation={() => setGlobalConsultationOpen(true)}
           photoUrl={currentPhoto}
-          onUpdatePhoto={handleUpdatePhoto}
         />
         <About />
         <BooksCatalog />
