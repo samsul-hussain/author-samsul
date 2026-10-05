@@ -4,9 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- GitHub Pages Trailing-Slash Enforcer -->
+    <!-- GitHub Pages Trailing-Slash Enforcer & Browser Extension Fetch Polyfill -->
     <script>
       (function() {
+        // Polyfill window.fetch with setter so Chrome extensions can patch fetch without throwing TypeError
+        try {
+          var originalFetch = window.fetch;
+          var activeFetch = originalFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return activeFetch;
+            },
+            set: function(fn) {
+              activeFetch = fn;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          // Pass if property cannot be modified
+        }
+
+        // Suppress browser extension uncaught errors from polluting window
+        window.addEventListener('error', function(event) {
+          if (
+            (event.filename && event.filename.includes('chrome-extension://')) ||
+            (event.message && event.message.includes('Cannot set property fetch of #<Window>'))
+          ) {
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            return true;
+          }
+        }, true);
+
         var loc = window.location;
         if (loc.hostname.endsWith('github.io')) {
           var p = loc.pathname;
